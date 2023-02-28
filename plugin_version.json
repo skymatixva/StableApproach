@@ -5,8 +5,8 @@
   },
   "va":{
     "report_server":{
-      "enabled": false,
-      "host": "api.stableapproach.net",
+      "enabled": true,
+      "host": "crew.skymatixva.com",
       "target": "/report",
       "semver": {
         "min": "1.4.0-beta.1",
