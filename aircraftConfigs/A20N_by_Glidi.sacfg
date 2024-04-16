@@ -1,14 +1,27 @@
 {
     "enabled": true,
     "acf": {
-        "icao": "B742",
-        "author": "Felis Leopard"
+        "icao": "A20N",
+        "author": "Gliding Kiwi"
     },
     "speed": {
         "taxi": -1
     },
     "autoUpdate": true,
-    "replace_dref": [],
+    "replace_dref": [
+        {
+            "old": "sim/cockpit/radios/nav1_freq_hz",
+            "new": "toliss_airbus/pfdoutputs/general/ils_frequency"
+        },
+        {
+            "old": "sim/cockpit/radios/nav1_hdef_dot",
+            "new": "AirbusFBW/ILS1LocRaw"
+        },
+        {
+            "old": "sim/cockpit/radios/nav1_vdef_dot",
+            "new": "AirbusFBW/ILS1GSRaw"
+        }
+    ],
     "checkHeights": [
         {
             "template": "IMC"
@@ -48,56 +61,57 @@
         {
             "template": "Glideslope deviation",
             "replace": {
-                "$VDOT": "$sim/cockpit/radios/nav1_vdef_dot"
+                "$VDOT": "$AirbusFBW/ILS1GSRaw"
             }
         },
         {
             "template": "Localizer deviation",
             "replace": {
-                "$HDOT": "$sim/cockpit/radios/nav1_hdef_dot"
+                "$HDOT": "$AirbusFBW/ILS1LocRaw"
             }
         },
         {
-            "template": "Approach speed (Vapp)",
+            "template": "Approach speed (Vref)",
             "replace": {
-                "$VAPP": "$B742/AP_panel/AT_spd_set_rotary",
+                "$VREF": "$toliss_airbus/pfdoutputs/general/VLS_value",
                 "$KIAS": "$sim/cockpit2/gauges/indicators/airspeed_kts_pilot"
             }
         },
         {
             "template": "Flaps",
             "replace": {
-                "$FLAPSCONDITION": "$sim/flightmodel/controls/flaprqst > 0.95 or ($sim/flightmodel/controls/flaprqst >= 0.78 and $sim/flightmodel/controls/flaprqst <= 0.88)",
-                "$FLAPSTEXT": "25/30"
+                "$FLAPSCONDITION": "($AirbusFBW/FlapLeverRatio >= 0.70 and $AirbusFBW/FlapLeverRatio <= 0.80) or $AirbusFBW/FlapLeverRatio >= 0.95",
+                "$FLAPSTEXT": "3 or FULL"
             }
         },
         {
             "template": "Gear",
             "replace": {
-                "$CONDITION": "$B742/controls/gear_lever_pos == 1 and $B742/front_lamps/LG_gear_down_lit > 0"
+                "$CONDITION": "$AirbusFBW/RightGearInd == 2 and $AirbusFBW/LeftGearInd == 2 and $AirbusFBW/NoseGearInd == 2"
             }
         },
         {
             "template": "Speedbrake",
             "replace": {
-                "$CONDITION": "$sim/cockpit2/controls/speedbrake_ratio == 0.333333"
+                "$CONDITION": "$sim/cockpit2/controls/speedbrake_ratio < -0.2"
             }
         },
         {
             "template": "Autoflight",
             "replace": {
-                "$CONDITION": "$B742/AP_panel/AP_engage_A < 2 and $B742/AP_panel/AP_engage_B < 2"
+                "$CONDITION": "$AirbusFBW/AP1Engage == 0 and $AirbusFBW/AP2Engage == 0"
             }
         },
         {
             "template": "No Tailstrike",
             "replace": {
-                "$TAILSTRIKEPITCH": "12.0",
-                "$CAUTIONPITCH": "9.0"
+                "$TAILSTRIKEPITCH": "12.8",
+                "$CAUTIONPITCH": "7.8"
             }
         },
         {
             "template": "Wind limits"
         }
+
     ]
 }
