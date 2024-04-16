@@ -6,7 +6,7 @@
   "va":{
     "report_server":{
       "enabled": true,
-      "host": "crew.skymatixva.com",
+      "host": "skymatixva.com",
       "target": "/dstable",
       "semver": {
         "min": "1.4.0-beta.1",
